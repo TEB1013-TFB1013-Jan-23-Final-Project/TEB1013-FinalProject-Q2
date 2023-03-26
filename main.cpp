@@ -20,10 +20,11 @@ struct CustomerDetails {
 };
 
 //to display menu selection
-void menu() {
+int menu() {
 
-    int customerChoice;
+    //int customerChoice;
 
+    cout << "\n";
     cout << "   ⋆｡ ﾟ☁︎｡ ⋆ WELCOME TO DREAM BANK ｡ ﾟ☾ ﾟ｡ ⋆  " << endl;
     cout << "---------------------------------------------" << endl;
     cout << "MAIN MENU" << endl;
@@ -32,61 +33,73 @@ void menu() {
     cout << "ෆ CHANGE CUSTOMER'S RECORD [3]" << endl;
     cout << "ෆ REMOVE CUSTOMER'S RECORD [4]" << endl;
     cout << "ෆ QUIT [5]" << endl;
-    cout << "CHOOSE AN OPTION FROM 1 - 4 ˙ᵕ˙ ";
-    cin >> customerChoice;
+    //cout << "\nCHOOSE AN OPTION FROM 1 - 4 ˙ᵕ˙ : ";
+    //cin >> customerChoice;
+
+    //return customerChoice;
 }
 
-CustomerDetails getDetails(CustomerDetails &obj) {
+CustomerDetails getDetails (CustomerDetails obj) {
 
     cout << endl;
 
     //prompt and read customer's name
     cout << "Enter name of customer : ";
-    cin >> obj.name;
+    cin.ignore();
+    getline(cin, obj.name);//user getline for string to accept whitespaces
 
     //prompt and read customer's address
     cout << "Enter customer's address : ";
-    cin >> obj.address;
+    getline(cin, obj.address);
 
     //prompt and read customer's city
     cout << "Enter customer's city : ";
-    cin >> obj.city;
+    getline(cin, obj.city);
 
     //prompt and read customer's state
     cout << "Enter customer's state : ";
-    cin >> obj.state;
+    getline(cin, obj.state);
 
     //prompt and read customer's postcode
     cout << "Enter customer's postcode : ";
     cin >> obj.postcode;
 
     //prompt and read customer's telephone number
-    cout << "Enter customer's telephone number : ";
+    cout << "Enter customer's telephone number : +6";
     cin >> obj.telephoneNumber;
 
-    //prompt and read customer's account balance
-    cout << "Enter customer's account balance : ";
-    cin >> obj.accountBalance;
+    //prompt and read customer's account balance, will keep loop if user's input is 0
+    do
+    {
+        cout << "Enter customer's account balance : RM";
+        cin >> obj.accountBalance;
+    }
+    while(obj.accountBalance <0);
 
     //prompt and read date of customer's last payment
-    cout << "Enter date of customer's last payment : ";
-    cin >> obj.dateOfLastPayment;
+    cout << "Enter date of customer's last payment (dd/mm/yyyy) : ";
+    cin.ignore();
+    getline(cin, obj.dateOfLastPayment);
 
     return obj;
 }
 
 //method to display customer's record
-void displayDetails(CustomerDetails customers[], int size) {
+void displayDetails (CustomerDetails customers[], int size) {
 
     //if-else condition
     if (size == 0) {
 
         //display
-        cout << endl << "There's no customer's record to display" << endl;
-    } else {
+        cout << endl << "There's no customer's record to display."
+                        "" << endl;
+    }
 
-        for (int i = 0; i < size; i++) {
+    else {
 
+        for ( int i = 0; i < size; i++) {
+            cout << "\nCustomer [" << (i+1) << "]\n";
+            cout << "\n";
             cout << "☾ CUSTOMER'S NAME ⋆｡°✩";
             cout << "\n" << customers[i].name << endl;
 
@@ -110,35 +123,147 @@ void displayDetails(CustomerDetails customers[], int size) {
 
             cout << "☾ DATE OF CUSTOMER'S LAST PAYMENT ⋆｡°✩";
             cout << "\n" << customers[i].dateOfLastPayment << endl;
+
+            cout << "CUSTOMER'S DETAILS HAS BEEN RECORDED";
+            cout << "\n---------------------------------------------------------------------\n";
         }
     }
 }
 
 //to change customer's record
-void
-change_record(string name[], string address[], string city[], string state[], int postcode[], double telephoneNumber[],
-              double accountBalance[], string dateOfLastPayment[]) {
-
-    int change;
-    string nameInput;
-    string customers;
+CustomerDetails change_record (CustomerDetails customers[], int size) {
+    bool found = false;
+    string name;
 
     cout << endl << "Enter name of customer to be modified : ";
-    getline(cin, nameInput);
     cin.ignore();
+    getline(cin, name);//use getline for string to accept whitespaces
 
-    change = getCustomer(customers, count, name);
+    for (int i = 0; i < size; i++) {
+        if (customers[i].name == name) {//if the string contains the searched query
 
-    //if name not valid
-    //print message and break from case
+            //had to redundant to avoid double usage of cin.ignore()
 
-    if (change == -1) {
+            //prompt and read customer's name
+            cout << "Enter name of customer : ";
+            getline(cin, customers[i].name);//user getline for string to accept whitespaces
 
-        cout << endl << "Wrong customer name to change : " << endl;
-    } else {
+            //prompt and read customer's address
+            cout << "Enter customer's address : ";
+            getline(cin, customers[i].address);
 
-        customers[change] = getDetails(customers);
+            //prompt and read customer's city
+            cout << "Enter customer's city : ";
+            getline(cin, customers[i].city);
+
+            //prompt and read customer's state
+            cout << "ENTER CUSTOMER'S STATE : ";
+            getline(cin, customers[i].state);
+
+            //prompt and read customer's postcode
+            cout << "Enter customer's postcode : ";
+            cin >> customers[i].postcode;
+
+            //prompt and read customer's telephone number
+            cout << "Enter customer's telephone number : +6";
+            cin >> customers[i].telephoneNumber;
+
+            //prompt and read customer's account balance
+            cout << "Enter customer's account balance : RM";
+            cin >> customers[i].accountBalance;
+
+            //prompt and read date of customer's last payment
+            cout << "Enter date of customer's last payment (dd/mm/yyyy) : ";
+            cin.ignore();
+            getline(cin, customers[i].dateOfLastPayment);
+
+            found = true;
+            return customers[i];//returns the object value
+
+
+        }
+    }
+
+    if (found == false) {
+        cout << endl << "WRONG CUSTOMER NAME TO CHANGE." << endl;
+    }
+
+}
+
+//to remove customer's record
+CustomerDetails remove_record (CustomerDetails customers[], int &size) {
+
+    string name;
+    bool found = false;
+
+    cout << "Enter customer's name to remove : ";
+    cin.ignore();
+    getline(cin, name);//use getline for string to accept whitespaces
+
+    for (int i = 0; i < size; i++) {
+        if (customers[i].name == name) {
+            cout << customers[i].name << " has been removed from the record." << endl;
+            for (int j = i; j < size - 1; j++) {
+                customers[j] = customers[j+1];
+            }
+            size--;
+            found = true;
+            return customers[size];
+        }
+    }
+
+    if (found == false) {
+        cout << name << " not found in the record." << endl;
     }
 }
 
-int getCustomer()
+void quit() {
+
+    cout << "THANK YOU SEE YOU AGAIN!" << endl;
+    exit(0);
+}
+
+int main() {
+
+    const int MAX_SIZE = 50;
+    CustomerDetails customers[MAX_SIZE];
+    int size = 0;
+
+    int choice;
+
+    do {
+        choice = menu();
+
+        cout << "\nCHOOSE AN OPTION FROM 1 - 5 ˙ᵕ˙ : ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                customers[size] = getDetails(customers[size]);
+                size++;
+                break;
+
+            case 2:
+                displayDetails(customers, size);
+                break;
+
+            case 3:
+                customers[size] = change_record(customers, size);
+                break;
+
+            case 4:
+                customers[size] = remove_record(customers, size);
+                break;
+
+            case 5:
+                quit();
+                break;
+
+            default:
+                cout << "INVALID CHOICE" << endl;
+                break;
+        }
+    } while (choice != 5);
+
+    return 0;
+}
