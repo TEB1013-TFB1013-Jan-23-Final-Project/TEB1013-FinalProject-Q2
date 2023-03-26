@@ -30,6 +30,10 @@ namespace question2 {
         return customerChoice;
     }
 
+    /**
+     *This function asks to create and input new customer details.
+     * @return valid details for new customers
+     */
     CustomerDetails createNewCustomerDetails() {
         CustomerDetails result{};
 
@@ -48,6 +52,10 @@ namespace question2 {
         return result;
     }
 
+    /**
+     *This function is meant to display the customers details.
+     * @param customer CustomerDetails object
+     */
     void printDetails(CustomerDetails &customer) {
         std::cout << "---------------------------------------------" << std::endl;
         std::cout << " CUSTOMER DETAILS " << std::endl;
@@ -63,12 +71,20 @@ namespace question2 {
         std::cout << "DATE OF LAST PAYMENT: " << customer.dateOfLastPayment.day << '/'
                   << customer.dateOfLastPayment.month << '/' << customer.dateOfLastPayment.year << std::endl;
     }
-
+    /**
+     * This function meant to create new customer details.
+     * Using the createNewCustomerDetails' function
+     * @param database adds it to the database vector
+     */
     void addNewCustomerDetails(std::vector<CustomerDetails> &database) {
         CustomerDetails newCustomer = createNewCustomerDetails();
         database.push_back(newCustomer);
     }
-
+    /**
+     * This function is meant to search for a customer by name.
+     * Displays their details if found.
+     * @param database if found from the database vector
+     */
     void displayParticularCustomerDetails(std::vector<CustomerDetails> &database) {
         if (database.empty()) {
             std::cout << "[-] NO CUSTOMER DETAILS RECORD." << std::endl;
@@ -89,7 +105,10 @@ namespace question2 {
             std::cout << "[-] No customer with name " << customerName << " is found in the database." << std::endl;
         }
     }
-
+    /**
+     * This function is meant to remove a customer by name.
+     * @param database if found from the database vector
+     */
     void removeParticularCustomerDetails(std::vector<CustomerDetails> &database) {
         if (database.empty()) {
             std::cout << "[-] NO CUSTOMER DETAILS RECORD." << std::endl;
@@ -117,7 +136,10 @@ namespace question2 {
             std::cout << "[-] No customer with name " << customerName << " is found in the database." << std::endl;
         }
     }
-
+    /**
+     * This function is meant to modify a customer details by name.
+     * @param database if found from the database vector
+     */
     void changeParticularCustomerDetails(std::vector<CustomerDetails> &database) {
         if (database.empty()) {
             std::cout << "[-] NO CUSTOMER DETAILS RECORD." << std::endl;
@@ -141,7 +163,10 @@ namespace question2 {
             std::cout << "[-] No customer with name " << customerName << " is found in the database." << std::endl;
         }
     }
-
+    /**
+     * This function is meant to diplay details of all customers.
+     * @param database from the database vector
+     */
     void displayAllCustomerDetails(std::vector<CustomerDetails> &database) {
         if (database.empty()) {
             std::cout << "[-] NO CUSTOMER DETAILS RECORD." << std::endl;
