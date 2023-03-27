@@ -61,7 +61,7 @@ int main() {
         }
 
         for (int i = 0; i < database.size(); i++) {
-            outputFile << "Customer " << i << std::endl;
+            outputFile << "Customer Details" << std::endl;
             outputFile << "\tNAME: " << database[i].name << std::endl;
             outputFile << "\tADDRESS: " << database[i].address << std::endl;
             outputFile << "\tCITY: " << database[i].city << std::endl;
