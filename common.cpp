@@ -25,7 +25,7 @@ namespace common {
             validMonth = date.month >= 1 && date.month <= 12;
 
             if (validYear && validMonth) {
-                if (isLeapYear(date.year)) {
+                if (isLeapYear(date.year) && date.month == 2) {
                     maxValidDay = 29;
                 } else {
                     maxValidDay = daysInMonth[date.month - 1];
