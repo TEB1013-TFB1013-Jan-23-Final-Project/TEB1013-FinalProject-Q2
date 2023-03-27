@@ -65,7 +65,7 @@ int main() {
             outputFile << "\tNAME: " << database[i].name << std::endl;
             outputFile << "\tADDRESS: " << database[i].address << std::endl;
             outputFile << "\tCITY: " << database[i].city << std::endl;
-            outputFile << "\tSTATE: " << database[i].city << std::endl;
+            outputFile << "\tSTATE: " << database[i].state << std::endl;
             outputFile << "\tPOSTCODE: " << database[i].postcode << std::endl;
             outputFile << "\tTELEPHONE: " << database[i].telephoneNumber << std::endl;
             outputFile.precision(2);
